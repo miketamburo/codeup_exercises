@@ -1,8 +1,8 @@
 <?php
 
 $a = 5;
-$b = 10;
-$c = '10';
+$b = '20';
+$c = '20';
 
 if ($a < $b) {
 	// output the appropriate result
@@ -37,8 +37,7 @@ if ($b === $c) {
 	echo "$b is equal to $c\n";
 	} else if ($b != $c) {
 	echo "$b is not equal to $c\n";
-	} else {
-	echo "$b is not identical to $c\n";
+	echo "The value of $b is not identical to the value $c\n";
 	}
 }
 ?>
