@@ -22,6 +22,6 @@ for ($number=1; $number<=100; $number++) {
 		echo "$number\n";
 	}
 }
-	
+exit(0);	
 
 ?>
