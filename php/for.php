@@ -7,6 +7,7 @@ $starting_number = fgets(STDIN);
 fwrite(STDOUT, 'Enter the second number: ');
 $ending_number = fgets(STDIN);
 
+// Sanitizer
 $starting_number = trim($starting_number);
 $ending_number = trim($ending_number);
 
@@ -26,9 +27,18 @@ if ($increment === 0) {
 }
 
 //Then display all numbers from the staring to ending using a for loop.
-for ($i = 0; $i<$ending_number; $i = $i + $increment) {	
-	echo "$starting_number\n";
-	$starting_number = $starting_number + $increment;
+// Address if the starting number is less than or greater than the ending number
+if ($starting_number < $ending_number) {
+	for ($i = $starting_number; $i<=$ending_number; $i = $i + $increment) {	
+		echo "$starting_number\n";
+		$starting_number = $starting_number + $increment;
+	}
+} else {
+	// When the starting number is greater than the ending number
+	for ($i = $starting_number; $i>=$ending_number; $i = $i - $increment) {	
+		echo "$starting_number\n";
+		$starting_number = $starting_number - $increment;
+}
 }
 
 ?>
