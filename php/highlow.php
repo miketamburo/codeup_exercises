@@ -3,14 +3,14 @@
 echo "Welcome to the High Low Game!\n";
 // Adding the feature of input validation.  Check that at least 3 inputs exist (file name + 2 others)
 if ($argc >= 3) {
-	$input1 = intval($argv[1]);
-	$input2 = intval($argv[2]);
+	$input1 = $argv[1]; // Equal to the first argument received
+	$input2 = $argv[2]; // Equal to the second argument received
 
 	// Verify they are numbers
 	if (is_numeric($input1) && is_numeric($input2)) {
-		// Found out which one is the lower number and assign values to the min & max numbers.
+		// Found out which one is the lower number and assign values to the min & max numbers to keep the game going vs exit with error.
 		if ($input1 > $input2) {
-			$min = $input2;
+			$min = $input2; 
 			$max = $input1;
 			$rand_number = mt_rand($min, $max);
 		} else {
