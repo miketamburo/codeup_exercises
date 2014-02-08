@@ -1,33 +1,45 @@
 <?php
 // The High Low Game!
-// Check that the arguments total the 3 required
-if (($argc == 3)&&((is_numeric($argv[1])!=(is_numeric($argv[2])) {
-			do {	
-				// Figure out which number is the minimum and which one is the maximum number.
-				if ($argv[1] > $argv[2]) {
-					$min = $argv[2];
-					$max = $argv[1];
-				} else {
-					$min = $argv[1];
-					$max = $argv[2];
-				}
-		} while ($argv[1]  $argv[2]);  
+echo "Welcome to the High Low Game!\n";
+// Adding the feature of input validation.  Check that at least 3 inputs exist (file name + 2 others)
+if ($argc >= 3) {
+	$input1 = intval($argv[1]);
+	$input2 = intval($argv[2]);
 
+	// Verify they are numbers
+	if (is_numeric($input1) && is_numeric($input2)) {
+		// Found out which one is the lower number and assign values to the min & max numbers.
+		if ($input1 > $input2) {
+			$min = $input2;
+			$max = $input1;
+			$rand_number = mt_rand($min, $max);
+		} else {
+			$min = $input1;
+			$max = $input2;
+			$rand_number = mt_rand($min, $max);
+		}
+	} else {
+		// Addresses if they are not numbers and you stil want to play vs exit.
+		echo "I did not find the correct inputs to play the game.\n I want to play. \n";
+		$rand_number = mt_rand(1, 100);
+		$min = 1;
+		$max = 100;
+	}
 } else {
-	echo "You didn't enter the correct information.  We will play by guessing a number between 1 and 100";
+	// Addresses if less than 3 inputs are found.
+	echo "I did not find the correct inputs to play the game.\n I want to play so guess a number between 1 and 100. \n";
+	$rand_number = mt_rand(1, 100);
 	$min = 1;
 	$max = 100;
 }
-	
-// Generate the random myster number:
-$rand_number = mt_rand($min, $max);	
 
-echo "Welcome to the High / Low game! " . " Guess a number between $min and $max. ";
+// Ask the user to guess the number
+echo "Guess a number between $min and $max. ";
 $num_Of_Guesses = 0;
 
 // Determine if the user's guess is higher or lower than the computer's number
 do { 
-	
+
 	echo "Guess? ";
 	$guess = fgets(STDIN);
 
@@ -37,10 +49,10 @@ do {
 // Addresses the chance they guess the number on their first try.
 	if (($guess == $rand_number) && ($num_Of_Guesses == 1)) {
 		echo "You win!  Lucky you. \n";
-	
+
 	} elseif ($guess < $rand_number) {
 		echo "HIGHER! \n";
-		
+
 	} elseif ($guess > $rand_number) {
 		echo "LOWER! \n";	
 	}	
@@ -50,11 +62,9 @@ do {
 
 // Tell the user they won!
 // To remove the carriage return I just used the value of the random number variable vs the STDIN
-
-echo "GOOD GUESS!  The number was $rand_number!\n";
+echo "WINNER!  The number was $rand_number!\n";
 echo "It took you $num_Of_Guesses tries.\n";
-exit();
-}
+exit(0);
 
 
 ?>
