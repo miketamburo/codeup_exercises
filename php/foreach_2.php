@@ -28,11 +28,12 @@ $books = array(
 // Run the foreach loop
 
 foreach ($books as $key => $value){
-	echo "$key\n";
-	foreach ($value as $key2 => $value2) {
-		echo "\t$key2: $value2\n";
-	}
-	
+	//echo "$key\n"; commented out for part 3 of exercise
+		foreach ($value as $key2 => $value2) {
+			if ($key2 == 'published' && $value2 >= 1950){
+			echo "$key was published in $value2\n";
+			}
+		}
 	}
 
 exit(0);
