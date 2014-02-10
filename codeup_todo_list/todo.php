@@ -26,6 +26,7 @@ do {
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
+    // Used strtoupper to covert all user inputs to capital characters
     $input = (strtoupper(trim(fgets(STDIN))));
 
 
