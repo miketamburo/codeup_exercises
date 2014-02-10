@@ -10,7 +10,7 @@ foreach ($things as $thing) {
 	if (is_scalar($thing)) {
 		echo "$thing\n";
 	} else {
-		
+	// Commented out part of code that would print individual value types	
 		// if (is_int($thing)) {
 		// echo "{$thing} is an integer.\n";
 		// }
@@ -33,6 +33,7 @@ foreach ($things as $thing) {
 
 		if (is_array($thing)) {
 		echo "Array\n";
+	// Commented out code which would process each value of an array without using a function	
 		// foreach ($thing as $array_value) {
 		// // Add all of the checks back in to test the array
 		// 	// if (is_int($thing)) {
