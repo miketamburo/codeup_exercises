@@ -4,7 +4,7 @@
 $items = array();
 
 
-// The loop! //
+// The loop!
 
 do {
     // Iterate through list items
@@ -13,12 +13,12 @@ do {
         // use a switch to exclude array key = 0
        switch ($key) {  
             case 0:
-            // echo "\n"; option to add a new line if desired
+            
             break;
 
             default:      
         echo "[{$key}] {$item}\n";
-    }
+        }
     }
 
     // Show the menu options
@@ -55,3 +55,5 @@ echo "Goodbye!\n";
 
 // Exit with 0 errors
 exit(0);
+
+?>
