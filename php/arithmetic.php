@@ -1,33 +1,33 @@
 <?php
 
-function add($a, $b) {
-    echo $a + $b . PHP_EOL;
+function add($num1, $num2) {
+    echo $num1 + $num2 . PHP_EOL;
 }
 
-function subtract($a, $b) {
-    echo $a - $b . PHP_EOL;
+function subtract($num1, $num2) {
+    echo $num1 - $num2 . PHP_EOL;
 }
 
-function multiply($a, $b) {
-    echo $a * $b . PHP_EOL;
+function multiply($num1, $num2) {
+    echo $num1 * $num2 . PHP_EOL;
 }
 
-function divide($a, $b) {
-    echo $a / $b . PHP_EOL;
+function divide($num1, $num2) {
+    echo $num1 / $num2 . PHP_EOL;
 }
 
-function modulus($a, $b) {
-    echo $a % $b . PHP_EOL;
+function modulus($num1, $num2) {
+    echo $num1 % $num2 . PHP_EOL;
 }
 
-$a = 40;
-$b = 2;
+$num1 = 40;
+$num2 = 2;
 
-add($a, $b);
-subtract($a, $b);
-multiply($a, $b);
-divide($a, $b);
-modulus($a, $b);
+add($num1, $num2);
+subtract($num1, $num2);
+multiply($num1, $num2);
+divide($num1, $num2);
+modulus($num1, $num2);
 
 
 ?>
