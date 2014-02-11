@@ -29,7 +29,7 @@ function multiply($num1, $num2) {
 // The divide function
 function divide($num1, $num2) {
 	if (numeric_check($num1, $num2) == true){
-     	return ($num1 + $num2);
+     	return ($num1 / $num2);
  	} else {
  		exit(0);
  	}
@@ -43,7 +43,7 @@ function divide($num1, $num2) {
 // The modulus function
 function modulus($num1, $num2) {
 	if (numeric_check($num1, $num2) == true){
-     	return ($num1 + $num2);
+     	return ($num1 % $num2);
  	} else {
  		exit(0);
  	}
