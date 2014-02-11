@@ -4,7 +4,7 @@
 $items = array();
 
 
-// The loop!
+// The loop! //
 
 do {
     // Iterate through list items
