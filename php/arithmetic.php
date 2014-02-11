@@ -15,6 +15,7 @@ function multiply($num1, $num2) {
 function divide($num1, $num2) {
 	if ($num2 == 0) {
 		echo "Didn't you learn in elementary school you can divide by zero?\n";
+		echo "The input values were:  $num1 and $num2.\n";
 	} else {
     echo $num1 / $num2 . PHP_EOL;
 	}
@@ -23,6 +24,7 @@ function divide($num1, $num2) {
 function modulus($num1, $num2) {
     if ($num2 == 0) {
 		echo "Didn't you learn in elementary school you can divide by zero?\n";
+		echo "The input values were:  $num1 and $num2.\n";
 	} else {
     echo $num1 % $num2 . PHP_EOL;
     }
