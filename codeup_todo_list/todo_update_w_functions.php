@@ -10,10 +10,10 @@ function list_items($list) {
     // [1] TODO item 1
     // [2] TODO item 2 - blah
     $string = '';
-    foreach ($list as $key => $value) {
+    foreach ($list as $key => $item) {
         $key = $key + 1;
         // Display each item and a newline
-        $string .= "[" . $key . "]" . " " . $value . " item " . $key . PHP_EOL;
+        $string .= "[" . $key . "]" . " " . $item . " item " . $key . PHP_EOL;
     // DO NOT USE ECHO, USE RETURN
     }
         return $string;
