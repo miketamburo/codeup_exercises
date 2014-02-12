@@ -11,9 +11,9 @@ function list_items($list) {
     // [2] TODO item 2 - blah
     $string = '';
     foreach ($list as $key => $item) {
-        $key = $key + 1;
+        $newIdex = $key + 1;
         // Display each item and a newline
-        $string .= "[" . $key . "]" . " " . $item . " item " . $key . PHP_EOL;
+        $string .= "[{$newIdex}] $item " . PHP_EOL;
     // DO NOT USE ECHO, USE RETURN
     }
         return $string;
@@ -51,9 +51,10 @@ do {
         // Remove which item?
         echo 'Enter item number to remove: ';
         // Get array key
-        $key = get_input(TRUE) - 1;
+        $key = get_input(TRUE);
+        $newIndex = $key - 1;
         // Remove from array
-        unset($items[$key]);
+        unset($items[$newIndex]);
         $items = array_values($items);
     }
 // Exit when input is (Q)uit
