@@ -28,6 +28,24 @@ function get_input($upper = FALSE) {
     return $upper ? strtoupper($input) : $input;
 
 }
+// Get STDIN, strip whitespace and newlines
+// and sort the list as desired
+// function sort_menu() {
+
+//     echo "How would you like to sort your item list? " . PHP_EOL;
+//     echo "(A) - Z or (Z) - A " . PHP_EOL;
+//     $input = get_input(TRUE);
+//             $list = '';
+//         if ($input == 'A') {
+//             $list = sort($items);
+            
+
+//         } elseif ($input == 'Z') {
+//             $list = rsort($items);
+            
+//         }
+// }
+
 
 // The loop!
 do {
@@ -35,7 +53,7 @@ do {
     echo list_items($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (Q)uit : ' . PHP_EOL;
+    echo '(N)ew item, (R)emove item, (S)ort, (Q)uit : ' . PHP_EOL;
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -56,7 +74,20 @@ do {
         // Remove from array
         unset($items[$newIndex]);
         $items = array_values($items);
-    }
+    } elseif ($input == 'S') {
+        // Sort the list
+        // sort_menu($items);
+        echo "How would you like to sort your item list? " . PHP_EOL;
+        echo "(A) - Z or (Z) - A " . PHP_EOL;
+        $input = get_input(TRUE);
+          
+        if ($input == 'A') {
+            $list = sort($items);   
+
+        } elseif ($input == 'Z') {
+            $list = rsort($items);
+        }
+    }    
 // Exit when input is (Q)uit
 } while ($input != 'Q');
 
