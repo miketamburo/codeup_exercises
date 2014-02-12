@@ -10,7 +10,7 @@ do {
     foreach ($items as $key => $item) {
         $key = $key + 1;
         // Display each item and a newline
-        echo "[{$key}] {$item}\n";
+        echo "[{$key}] {$item} item $key\n";
     }
 
     // Show the menu options
