@@ -62,18 +62,22 @@ do {
     // Check for actionable input
     if ($input == 'N') {
             echo 'Enter item: ';
-            $item = get_input();
-        if (!empty($item)) {
+            $item = get_input();       
+        if (!empty($items)) {
             echo "Would you like to add it to the (B)eginning or (E)nd of the list? " . PHP_EOL;
             $option = get_input(TRUE);
 
             if ($option == 'B') {
                 array_unshift($items, $item);
+
             } elseif ($option == 'E') {
                 array_push($items, $item);
+
             } else {
                 array_push($items, $item);
             }
+        } else {
+            $items[] = $item;
         }
     
     } elseif ($input == 'R') {
@@ -97,8 +101,17 @@ do {
 
         } elseif ($input == 'Z') {
             rsort($items);
+        } elseif ($input == 'F') {
+            array_unshift($items);
+        } elseif ($input == 'L') {
+            array_pop($items);
         }
-    }    
+    } elseif ($input == 'F') {
+            array_shift($items);
+        
+    } elseif ($input == 'L') {
+            array_pop($items);
+    }  
 // Exit when input is (Q)uit
 } while ($input != 'Q');
 
