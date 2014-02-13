@@ -82,10 +82,10 @@ do {
         $input = get_input(TRUE);
           
         if ($input == 'A') {
-            $list = sort($items);   
+            sort($items);   
 
         } elseif ($input == 'Z') {
-            $list = rsort($items);
+            rsort($items);
         }
     }    
 // Exit when input is (Q)uit
