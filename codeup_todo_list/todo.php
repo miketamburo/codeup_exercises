@@ -61,10 +61,21 @@ do {
 
     // Check for actionable input
     if ($input == 'N') {
-        // Ask for entry
-        echo 'Enter item: ';
-        // Add entry to list array
-        $items[] = get_input();
+            echo 'Enter item: ';
+            $item = get_input();
+        if (!empty($item)) {
+            echo "Would you like to add it to the (B)eginning or (E)nd of the list? " . PHP_EOL;
+            $option = get_input(TRUE);
+
+            if ($option == 'B') {
+                array_unshift($items, $item);
+            } elseif ($option == 'E') {
+                array_push($items, $item);
+            } else {
+                array_push($items, $item);
+            }
+        }
+    
     } elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
