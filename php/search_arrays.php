@@ -14,7 +14,7 @@ function find_it ($query, $names) {
 }
 
 function compare ($names, $compare) {
-		$names_in_common = 0;
+	$names_in_common = 0;
 	foreach ($names as $key => $value) {
 		
 		find_it($value, $compare);
