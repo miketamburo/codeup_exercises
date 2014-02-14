@@ -52,7 +52,8 @@ $morseCodes = array(
   array('char'=>"_", 'morse'=>"..--.-"),
   array('char'=>"\"",'morse'=>".-..-."),
   array('char'=>"$", 'morse'=>"...-..-"),
-  array('char'=>"@", 'morse'=>".--.-.)")
+  array('char'=>"@", 'morse'=>".--.-.)"),
+  array('char'=>" ", 'morse'=>"/"),
   );
 
 // Program automatically converts English text to Morse Code
@@ -64,21 +65,17 @@ $user_String = (strtoupper(trim(fgets(STDIN))));
 
 $string_length = strlen($user_String);
 
-
-echo $user_String[1];
-
-
-for ($i = 0; $i <= $string_length; $i++) {
-	$char = $user_String[$i];
-	if (array_search('$char', $morseCodes)){
-		echo $user_String[$i];
-	}
-	 		 
+$input = str_split($user_String);
+var_dump($input);
+foreach ($input as $letter){
+  foreach($morseCodes as $code) {
+    if ($letter == $code['char']) {
+       echo $code['morse'];
+        break;
+    }
+  }
 }
 
-
-
-
-
+	 		 
 
 ?>
