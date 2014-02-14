@@ -64,7 +64,7 @@ echo "Enter the text you want to translate to morse code:" . PHP_EOL;
 $user_String = (strtoupper(trim(fgets(STDIN))));
 
 $input = str_split($user_String);
-
+$complete_string = 0;
 foreach ($input as $letter){
   foreach($morseCodes as $code) {
     if ($letter == $code['char']) {
@@ -74,6 +74,7 @@ foreach ($input as $letter){
   }
 }
 
-	 		 
+echo "\n";
 
+	 		 
 ?>
