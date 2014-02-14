@@ -46,7 +46,7 @@ do {
     echo list_items($items);
 
     // Show the menu options
-    echo '(N)ew item, (O)pen file, (R)emove item, (S)ort, (Q)uit : ' . PHP_EOL;
+    echo '(N)ew item, (O)pen file, (R)emove item, (S)ort, sa(V)e file, (Q)uit : ' . PHP_EOL;
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -77,9 +77,7 @@ do {
         // Open a file
         echo 'Enter the path and file name you wish to open: ';
         $file_path = get_input();
-        $items = read_and_add_file($items, $file_path);
-
-             
+        $items = read_and_add_file($items, $file_path);         
 
     } elseif ($input == 'R') {
         // Remove which item?
@@ -90,6 +88,12 @@ do {
         // Remove from array
         unset($items[$newIndex]);
         $items = array_values($items);
+    } elseif ($input == 'V') { 
+        // Open a file
+        echo 'Enter the path and file name you wish to save: ';
+        $file_path = get_input();
+        $items = read_and_add_file($items, $file_path);  
+
     } elseif ($input == 'S') {
         // Sort the list
         // sort_menu($items);
