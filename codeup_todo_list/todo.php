@@ -42,13 +42,16 @@ function read_and_add_file($items, $filename) {
 function save_file($items, $filename) {
    
     if (file_exists($filename)) {
-        echo "The file $filename exists.  Saving the file." . PHP_EOL;
-        $handle = fopen($filename, "w");
-        $item = implode("\n", $items);
-        fwrite($handle, $item);
+        echo "The file $filename exists.  Comfirm you want to replace the file." . PHP_EOL;
+        $answer = get_input(TRUE);
+        if ($answer == "YES" || $answer == "Y"){
+            $handle = fopen($filename, "w");
+            $item = implode("\n", $items);
+            fwrite($handle, $item);
       
-        fclose($handle);
-        return $items;
+            fclose($handle);
+            return $items;
+        }
 
     } else {
         echo "The file $filename does not exist.  Confirm you wish to create it: (Y)es or (No) " . PHP_EOL;
@@ -58,8 +61,8 @@ function save_file($items, $filename) {
             $item = implode("\n", $items);
             fwrite($handle, $item);
       
-        fclose($handle);
-        return $items;
+            fclose($handle);
+            return $items;
         } 
     } return $items;
 }
