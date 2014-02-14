@@ -34,9 +34,7 @@ function read_and_add_file($items, $filename) {
     $contents = fread($handle, filesize($filename));
     fclose($handle);
     $contents_array = explode("\n", $contents);
-        // foreach($contents_array as $value) {
-        // array_push($items, $value);
-        // }
+
     $items = array_merge($items, $contents_array);
         return array_values($items);
 }
