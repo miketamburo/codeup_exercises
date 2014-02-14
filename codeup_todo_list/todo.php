@@ -22,8 +22,8 @@ function list_items($list) {
 // Get STDIN, strip whitespace and newlines, 
 // and convert to uppercase if $upper is true
 function get_input($upper = FALSE) {
-
-    $input = trim(fgets(STDIN));
+// change the first character to Upper case from trim(fgets(STDIN))
+    $input = ucwords(trim(fgets(STDIN)));
 
     return $upper ? strtoupper($input) : $input;
 
@@ -34,10 +34,10 @@ function read_and_add_file($items, $filename) {
     $contents = fread($handle, filesize($filename));
     fclose($handle);
     $contents_array = explode("\n", $contents);
-        foreach($contents_array as $value) {
-        array_push($items, $value);
-        }
-    // $items = array_merge($items, $contents_array);
+        // foreach($contents_array as $value) {
+        // array_push($items, $value);
+        // }
+    $items = array_merge($items, $contents_array);
         return array_values($items);
 }
 
@@ -80,6 +80,7 @@ do {
         echo 'Enter the path and file name you wish to open: ';
         $file_path = get_input();
         $items = read_and_add_file($items, $file_path);
+
              
 
     } elseif ($input == 'R') {
