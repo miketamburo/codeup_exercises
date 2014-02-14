@@ -39,6 +39,31 @@ function read_and_add_file($items, $filename) {
         return array_values($items);
 }
 
+function save_file($items, $filename) {
+   
+    if (file_exists($filename)) {
+        echo "The file $filename exists.  Saving the file." . PHP_EOL;
+        $handle = fopen($filename, "w");
+        $item = implode("\n", $items);
+        fwrite($handle, $item);
+      
+        fclose($handle);
+        return $items;
+
+    } else {
+        echo "The file $filename does not exist.  Confirm you wish to create it: (Y)es or (No) " . PHP_EOL;
+        $answer = get_input(TRUE);
+        if ($answer == "YES" || $answer == "Y") {
+            $handle = fopen($filename, "w");
+            $item = implode("\n", $items);
+            fwrite($handle, $item);
+      
+        fclose($handle);
+        return $items;
+        } 
+    } return $items;
+}
+
 
 // The loop!
 do {
@@ -91,8 +116,8 @@ do {
     } elseif ($input == 'V') { 
         // Open a file
         echo 'Enter the path and file name you wish to save: ';
-        $file_path = get_input();
-        $items = read_and_add_file($items, $file_path);  
+        $file_path = (strtolower(get_input()));
+        $items = save_file($items, $file_path);  
 
     } elseif ($input == 'S') {
         // Sort the list
