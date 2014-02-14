@@ -10,10 +10,10 @@ function list_items($list) {
     // [1] TODO item 1
     // [2] TODO item 2 - blah
     $string = '';
-    foreach ($list as $key => $item) {
+    foreach ($list as $key => $thing) {
         $newIdex = $key + 1;
         // Display each item and a newline
-        $string .= "[{$newIdex}] $item " . PHP_EOL;
+        $string .= "[{$newIdex}] $thing " . PHP_EOL;
     // DO NOT USE ECHO, USE RETURN
     }
         return $string;
@@ -28,23 +28,17 @@ function get_input($upper = FALSE) {
     return $upper ? strtoupper($input) : $input;
 
 }
-// Get STDIN, strip whitespace and newlines
-// and sort the list as desired
-// function sort_menu() {
 
-//     echo "How would you like to sort your item list? " . PHP_EOL;
-//     echo "(A) - Z or (Z) - A " . PHP_EOL;
-//     $input = get_input(TRUE);
-//             $list = '';
-//         if ($input == 'A') {
-//             $list = sort($items);
-            
-
-//         } elseif ($input == 'Z') {
-//             $list = rsort($items);
-            
-//         }
-// }
+function read_and_add_file($items, $filename) {
+    $handle = fopen($filename, "r");
+    $contents = fread($handle, filesize($filename));
+    fclose($handle);
+    $contents_array = explode("\n", $contents);
+        foreach($contents_array as $value) {
+        array_push($items, $value);
+        }
+        return $items;
+}
 
 
 // The loop!
@@ -53,7 +47,7 @@ do {
     echo list_items($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (S)ort, (Q)uit : ' . PHP_EOL;
+    echo '(N)ew item, (O)pen file, (R)emove item, (S)ort, (Q)uit : ' . PHP_EOL;
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -80,6 +74,13 @@ do {
             $items[] = $item;
         }
     
+    } elseif ($input == 'O') { 
+        // Open a file
+        echo 'Enter the path and file name you wish to open: ';
+        $file_path = get_input();
+        $items[] = read_and_add_file($items, $file_path);
+             
+
     } elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
