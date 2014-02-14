@@ -37,6 +37,7 @@ function read_and_add_file($items, $filename) {
         foreach($contents_array as $value) {
         array_push($items, $value);
         }
+        var_dump($items);
         return $items;
 }
 
