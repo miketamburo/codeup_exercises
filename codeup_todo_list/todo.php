@@ -37,8 +37,8 @@ function read_and_add_file($items, $filename) {
         foreach($contents_array as $value) {
         array_push($items, $value);
         }
-        var_dump($items);
-        return $items;
+    // $items = array_merge($items, $contents_array);
+        return array_values($items);
 }
 
 
@@ -79,7 +79,7 @@ do {
         // Open a file
         echo 'Enter the path and file name you wish to open: ';
         $file_path = get_input();
-        $items[] = read_and_add_file($items, $file_path);
+        $items = read_and_add_file($items, $file_path);
              
 
     } elseif ($input == 'R') {
