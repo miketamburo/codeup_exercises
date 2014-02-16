@@ -64,8 +64,31 @@ foreach($input_array as $key => $value) {
 }
 
 $string = substr($string, 1);
-echo (ucfirst($string));
 
+echo (ucfirst($string)) . PHP_EOL;
+
+// Turn Pig Latin back to English
+
+echo "Enter a sentence in Pig Latin with no punctuation nor special characters." . PHP_EOL;
+$input = (strtolower(trim(fgets(STDIN))));
+
+$latin_array = explode(" ", $input);
+
+$string = 0;
+foreach($latin_array as $key => $value) {
+	$word_length = strlen($value);
+	
+	$first_letter = substr($value, -3, 1);
+	$word_length = $word_length - 3;
+	$word = substr($value, 0, $word_length);
+	
+	$new_word = $first_letter . $word . " ";
+
+	$string .= $new_word;	
+}
+$string = substr($string, 1);
+
+echo (ucfirst($string)) . PHP_EOL;
 
 
 ?>
