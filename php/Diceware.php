@@ -26,7 +26,7 @@ the relevant words and then output them out to the user before exiting.
 
 
 echo "Welcome to Diceware" . PHP_EOL;
-echo "How many words would you like to generate?" . PHP_EOL;
+echo "How many words would you like to generate? Please enter a number." . PHP_EOL;
 $num_of_words_required = (strtolower(trim(fgets(STDIN))));
 
 // Open the reference file and import the key into an array
@@ -43,23 +43,36 @@ $dice_key = explode("\n", $contents);
 $index = 1;
 $generated_word = 0;
 $generated_array = array();
+
+
 While ($index <= $num_of_words_required) {
 	for($i = 0; $i <= 4; $i++) {
-	$number_generated = intval(rand(1, 6));
-	$generated_word .= $number_generated;
+		$number_generated = intval(rand(1, 6));
+		$generated_word .= $number_generated;
 	}
+
 	$index++;
+
 	$look_up_Num = (substr($generated_word, 1));
-	echo $look_up_Num;
+
+// edit the diceware array file into numbers and values
 	foreach($dice_key as $key => $value) {
-		if (in_array('$look_up_Num', $dice_key)) {
-			echo (substr($value, 7));
+		$new_array = explode("\t", $value);	
+
+		$dice_key = array($new_array);
+	
+		foreach ($dice_key as $key2 => $value2) {
+			$decoded_word = 0;
+				if (in_array($look_up_Num, $value2)){
+				$decoded_word = $value2[($key2 + 1)];
+					echo $decoded_word . " ";	
+			}
+
 		}
 	}
+	$generated_word = 0;
+	$dice_key = explode("\n", $contents);
 }
-
-
-
-
+echo "\n";
 
 ?>
