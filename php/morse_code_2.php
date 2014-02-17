@@ -14,8 +14,7 @@ $input_code = (strtoupper(trim(fgets(STDIN))));
 // 				var_dump((substr($input_code, 3, 1))) . PHP_EOL;
 // 					echo (substr($input_code, 5, 1)) . PHP_EOL;
 $code_length = strlen($input_code);
-$increment = 0;
-$index = 0;
+
 $generated_letter = 0;
 $letter = 0;
 
@@ -25,17 +24,19 @@ for ($i=0; $i<=$code_length; $i++){
 			$letter = (substr($input_code, $i, 1));
 			$generated_letter .= $letter;
 
-			// var_dump($generated_letter);
-
 		} elseif ($letter === "/") {
 			echo " ";
 		} elseif ($letter === " "){
-			$i = $i + 1;	
+			if ($i <= $code_length){
+
+			} else {
+			$input_code = substr($input_code, $i+1);	
+			}
 		}
 }
-	$generated_letter = (trim($generated_letter));
 
-	$generated_letter = (substr($generated_letter, 1));
+$generated_letter = (trim($generated_letter));
+$generated_letter = (substr($generated_letter, 1));
 
 	switch($generated_letter){
 		case '-':
@@ -197,19 +198,12 @@ for ($i=0; $i<=$code_length; $i++){
 			echo "$";
 			break;
 	}
-	if ($i == $code_length){
-		
-		break;
-	} else {
-	$input_code = (substr($input_code, $i + 1));
-	echo ($input_code);
-	
-	$index = $index + 1;
-	$increment++;
-		
-	}
-	
+		if ($i == $code_length){
+			break;
+		} else {
+		$input_code = (substr($input_code, $i + 1));
+		}
 
-	echo "\n";
+echo "\n";
 
 ?>
