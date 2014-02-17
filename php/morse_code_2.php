@@ -4,7 +4,7 @@
 // Turn Morse Code into English
 
 // Get the Morse Code
-echo "Please enter your Morse Code.  Use '/' instead of spaces." . PHP_EOL;
+echo "Please enter your Morse Code.  Use '/' instead of spaces between words." . PHP_EOL;
 $input_code = (strtoupper(trim(fgets(STDIN))));
 
 // echo (substr($input_code, 0, 1)) . PHP_EOL;
@@ -13,25 +13,29 @@ $input_code = (strtoupper(trim(fgets(STDIN))));
 // 			echo (substr($input_code, 3, 1)) . PHP_EOL;
 // 				var_dump((substr($input_code, 3, 1))) . PHP_EOL;
 // 					echo (substr($input_code, 5, 1)) . PHP_EOL;
-
-
-
 $code_length = strlen($input_code);
-$word = 0;
+$increment = 0;
 $index = 0;
 $generated_letter = 0;
 $letter = 0;
 
-while ($index <= $code_length){
-	for ($i=$index; $i<=$code_length; $i++){
+
+for ($i=0; $i<=$code_length; $i++){
 		if ($letter !== " "){
 			$letter = (substr($input_code, $i, 1));
 			$generated_letter .= $letter;
+
+			// var_dump($generated_letter);
+
 		} elseif ($letter === "/") {
 			echo " ";
-		} 
-	}
-$generated_letter = (substr($generated_letter, 1));
+		} elseif ($letter === " "){
+			$i = $i + 1;	
+		}
+}
+	$generated_letter = (trim($generated_letter));
+
+	$generated_letter = (substr($generated_letter, 1));
 
 	switch($generated_letter){
 		case '-':
@@ -193,9 +197,19 @@ $generated_letter = (substr($generated_letter, 1));
 			echo "$";
 			break;
 	}
-	$generated_letter = 0;
-	$index = $i+1;
-}
+	if ($i == $code_length){
+		
+		break;
+	} else {
+	$input_code = (substr($input_code, $i + 1));
+	echo ($input_code);
+	
+	$index = $index + 1;
+	$increment++;
+		
+	}
+	
+
 	echo "\n";
 
 ?>
