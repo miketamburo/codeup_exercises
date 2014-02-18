@@ -5,22 +5,25 @@ echo "Please enter a word you would like to check." . PHP_EOL;
 // Get the user's input
 $user_input = (strtolower(trim(fgets(STDIN))));
 
+// Remove unwanted characters
+$new_input = $user_input;
+$remove_items = array(" ", ",", "'", ":", "!", ";", "?", ".");
+
+$newphrase = str_replace($remove_items, "", $new_input);
+
 // Reverse the order of letters in the user's input
-$user_reverse = strrev($user_input);
+$user_reverse = strrev($newphrase);
 
-// Create a string for comparision
-
-
-if ($user_input === $user_reverse){
+if ($newphrase === $user_reverse){
 	echo (ucfirst($user_input)) . PHP_EOL;
 	echo (ucfirst($user_reverse)) . PHP_EOL;
 	echo "Your word is a palindrome!" . PHP_EOL;
 	return True;
 } else {
-	echo (ucfirst($user_input)) . PHP_EOL;
-	echo (ucfirst($user_reverse)) . PHP_EOL;
+	// echo (ucfirst($user_input)) . PHP_EOL;
+	// echo (ucfirst($user_reverse)) . PHP_EOL;
 	echo "Sorry, your word is not a palindrome." . PHP_EOL;
 	return False;
 }
-
+exit(0);
 ?>
