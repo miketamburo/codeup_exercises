@@ -1,16 +1,15 @@
 <?php
 
-// complete all "todo"s to build a blackjack game
+// blackjack game
 
 // create an array for suits
 $suits = ['C', 'H', 'S', 'D'];
-
 
 // create an array for cards
 $cards = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 
 // build a deck (array) of cards
-$deck = array();
+$eachCard = array();
 // card values should be "VALUE SUIT". ex: "7 H"
 // make sure to shuffle the deck before returning it
 function buildDeck($suits, $cards) {
@@ -19,6 +18,7 @@ function buildDeck($suits, $cards) {
 	foreach($cards as $key => $card){
 	// rotate through each card and assign a suit, a value, and determine if its an ace	
 		for ($i=0; $i<=3; $i++){
+			$suit = $suits[$i];
 			if ($card === 'A') {
 				$worth = 11;
 				$isAce = TRUE;
@@ -32,8 +32,8 @@ function buildDeck($suits, $cards) {
 			/* for each card the zero index holds the card face, index 1 holds suit, 
 			index 2 holds value (worth), index 2 - is it an Ace
 			*/
-			$deck = array($card, $suits[$i], $worth, $isAce);
-			$new_deck[] = ($deck);	
+			$eachCard = ['name' => $card, 'value' => $worth,  'suit' => $suit];
+			$new_deck[] = $eachCard;	
 		}
 	}
 		// shuffle the cards in the deck
@@ -41,44 +41,36 @@ function buildDeck($suits, $cards) {
 
 		return $new_deck;
 }
-
-$shuffled_deck = buildDeck($suits, $cards);
-// var_dump($shuffled_deck);
-// print_r($card);
-// var_dump($shuffled_deck);
-
 // determine if a card is an ace
 // return true for ace, false for anything else
 function cardIsAce($card) {
-// $card [Index 3] holds answer
-		($card[3])? TRUE : FALSE;
+	($card['suit' == 'A'])? TRUE : FALSE;
 }
-
 // determine the value of an individual card (string)
 // aces are worth 11
 // face cards are worth 10
 // numeric cards are worth their value
 function getCardValue($card) {
-  		return $card[2];
+  		return $card['value'];
 }
 
 // get total value for a hand of cards
 // don't forget to factor in aces
 // aces can be 1 or 11 (make them 1 if total value is over 21)
 function getHandTotal($hand) {
-  // todo
+	$hand_worth = 0;
+	foreach ($hand as $key => $card){
+		$hand_worth += $card['value'];
+	}
+		return $hand_worth;
 }
-
 // draw a card from the deck into a hand
 // pass by reference (both hand and deck passed in are modified)
 function drawCard(&$hand, &$deck) {
  
-$card = array_pop($shuffled_deck);
+	$card = array_pop($shuffled_deck);
 
 }
-
-
-
 // print out a hand of cards
 // name is the name of the player
 // hidden is to initially show only first card of hand (for dealer)
@@ -87,29 +79,78 @@ $card = array_pop($shuffled_deck);
 // or:
 // Player: [J D] [2 D] Total: 12
 function echoHand($hand, $name, $hidden = false) {
-  // todo
+	$string = " ";
+	foreach ($hand as $key => $card){
+		if ($hidden == true) {
+			$string = ("[" . $card['name'] . " " . $card['suit'] . "] ");
+			break;
+		} else {
+			$string .= ("[" . $card['name'] . " " . $card['suit'] . "] ");
+		}	
+	}
+	echo $name . "'s Hand: " . $string . " ";
 }
+// Welcome the user and get their name
+
+echo "Welcome to Vegas Blackjack. " . PHP_EOL;
+echo "Please enter your name: ";
+$name = (trim(fgets(STDIN)));
+
+echo PHP_EOL . "Let's play!" . PHP_EOL;
 
 // build the deck of cards
-$deck = buildDeck($suits, $cards);
+$shuffled_deck = buildDeck($suits, $cards);
 
 // initialize a dealer and player hand
 $dealer = [];
 $player = [];
 
-// dealer and player each draw two cards
-// todo
+// Start the game -- dealer and player each draw two cards
+for ($i=0; $i<2; $i++){
+	$dealer[] = array_pop($shuffled_deck);
+	$player[] = array_pop($shuffled_deck);
+}
 
 // echo the dealer hand, only showing the first card
-// todo
+echoHand ($dealer, 'Dealer', true); 
+echo "\n";
 
 // echo the player hand
-// todo
+echoHand ($player, $name, false);
+$players_total = getHandTotal($player);
+echo "Player's card total is " . $players_total . PHP_EOL;
+
+if ($players_total == 21) {
+	echo "LUCKY YOU!  YOU WIN!!!!!!";
+	exit(0);
+}
 
 // allow player to "(H)it or (S)tay?" till they bust (exceed 21) or stay
-// while () {
-//   // todo
-// }
+while ($players_total < 21) {
+echo "Do you want to (H)it or (S)tay?" . PHP_EOL;
+// Get player's answer
+$answer = (strtoupper(trim(fgets(STDIN))));
+
+	if ($answer === 'H' || $answer === 'HIT'){
+
+		$player[] = array_pop($shuffled_deck);
+		echo "\n";
+		echoHand ($player, $name, false);
+		$players_total = getHandTotal($player);
+		echo "Player's card total is " . $players_total . PHP_EOL;
+
+	} elseif ($answer === 'S' || $answer === 'STAY') {
+		break;
+	} 
+
+	if ($players_total == 21) {
+		echo "You win!";
+		exit (0);
+
+	} elseif ($players_total > 21) {
+		echo "\n BUST!!!!!!!!!" . PHP_EOL;
+	}
+}
 
 // show the dealer's hand (all cards)
 // todo
@@ -127,3 +168,5 @@ $player = [];
 // by this point, if dealer has busted, then player automatically wins
 // if player and dealer tie, it is a "push"
 // if dealer has more than player, dealer wins, otherwise, player wins
+
+?>
