@@ -43,10 +43,10 @@ function buildDeck($suits, $cards) {
 }
 
 $shuffled_deck = buildDeck($suits, $cards);
-var_dump($shuffled_deck);
-$card = array_pop($shuffled_deck);
-print_r($card);
-var_dump($shuffled_deck);
+// var_dump($shuffled_deck);
+// print_r($card);
+// var_dump($shuffled_deck);
+
 // determine if a card is an ace
 // return true for ace, false for anything else
 function cardIsAce($card) {
@@ -73,6 +73,8 @@ function getHandTotal($hand) {
 // pass by reference (both hand and deck passed in are modified)
 function drawCard(&$hand, &$deck) {
  
+$card = array_pop($shuffled_deck);
+
 }
 
 
