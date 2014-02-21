@@ -29,9 +29,7 @@ function buildDeck($suits, $cards) {
 				$worth = intval($card);
 				$isAce = FALSE;
 			} 
-			/* for each card the zero index holds the card face, index 1 holds suit, 
-			index 2 holds value (worth), index 2 - is it an Ace
-			*/
+			// created an associative array 
 			$eachCard = ['name' => $card, 'value' => $worth,  'suit' => $suit];
 			$new_deck[] = $eachCard;	
 		}
@@ -41,27 +39,8 @@ function buildDeck($suits, $cards) {
 
 		return $new_deck;
 }
-// determine if a card is an ace
-// return true for ace, false for anything else
-function cardIsAce($card) {
-	$aceCount = 0;
-	foreach ($card as $key => $value){
-		if ($card['name'] == 'A') {
-			$aceCount = $aceCount + 1;
-		}
-		return $aceCount;
-	}
-}
-// determine the value of an individual card (string)
-// aces are worth 11
-// face cards are worth 10
-// numeric cards are worth their value
-function getCardValue($card) {
-  		($card['name'] == 'A') ? ($card['value'] = 1) : ($card['value'] = 11);
-}
 
 // get total value for a hand of cards
-// don't forget to factor in aces
 // aces can be 1 or 11 (make them 1 if total value is over 21)
 function getHandTotal($hand) {
 	$hand_worth = 0;
@@ -77,18 +56,14 @@ function getHandTotal($hand) {
 			if ($numOfAce != 0){
 				$hand_worth = $hand_worth - 10;
 				$numOfAce--;
-			} 
+			} else {
+				break;
+			}
 		}
 	}
 		return $hand_worth;
 }
-// draw a card from the deck into a hand
-// pass by reference (both hand and deck passed in are modified)
-function drawCard(&$hand, &$deck) {
- 
-	$card = array_pop($shuffled_deck);
 
-}
 // print out a hand of cards
 // name is the name of the player
 // hidden is to initially show only first card of hand (for dealer)
@@ -106,7 +81,7 @@ function echoHand($hand, $name, $hidden = false) {
 			$string .= ("[" . $card['name'] . " " . $card['suit'] . "] ");
 		}	
 	}
-	echo $name . "'s Hand: " . $string . " ";
+	echo $name . "'s Hand: " . $string . " " . PHP_EOL;
 }
 // Welcome the user and get their name
 
@@ -130,12 +105,12 @@ for ($i=0; $i<2; $i++){
 }
 
 // echo the dealer hand, only showing the first card
-echoHand ($dealer, 'Dealer', true); 
-echo "\n";
+echoHand ($dealer, 'Dealer', true) . PHP_EOL; 
 
 // echo the player hand
 echoHand ($player, $name, false);
 $players_total = getHandTotal($player);
+
 echo "Player's card total is " . $players_total . PHP_EOL;
 
 if ($players_total == 21) {
@@ -145,40 +120,38 @@ if ($players_total == 21) {
 
 // allow player to "(H)it or (S)tay?" till they bust (exceed 21) or stay
 while ($players_total < 21) {
-echo "Do you want to (H)it or (S)tay?" . PHP_EOL;
-// Get player's answer
-$answer = (strtoupper(trim(fgets(STDIN))));
+	echo "Do you want to (H)it or (S)tay?" . PHP_EOL;
+	// Get player's answer
+	$answer = (strtoupper(trim(fgets(STDIN))));
 
 	if ($answer === 'H' || $answer === 'HIT'){
 				
 		$player[] = array_pop($shuffled_deck);
-		echo "\n";
+		
 		echoHand ($player, $name, false);
 
 		$players_total = getHandTotal($player);
-		echo "Player's card total is " . $players_total . PHP_EOL;
+		
+		echo PHP_EOL . "Player's card total is " . $players_total . PHP_EOL;
 
 	} elseif ($answer === 'S' || $answer === 'STAY') {
 		break;
 	} 
-// at this point, if the player has more than 21, tell them they busted
-// otherwise, if they have 21, tell them they won (regardless of dealer hand)
+	// at this point, if the player has more than 21, tell them they busted
+	// otherwise, if they have 21, tell them they won (regardless of dealer hand)
 	if ($players_total == 21) {
 		echo "You win!" . PHP_EOL;
 		exit (0);
 
 	} elseif ($players_total > 21) {
-// Does the player have any aces?  If so, adjust $player's total
-
-
 		echo "\n BUST!!!!!!!!!" . PHP_EOL;
 		exit(0);
 	}
 }
 
 // show the dealer's hand (all cards)
-echoHand ($dealer, 'Dealer', false); 
-echo "\n";
+echoHand ($dealer, 'Dealer', false) . PHP_EOL; 
+
 $dealers_total = getHandTotal($dealer);
 echo "Dealer's card total is " . $dealers_total . PHP_EOL;
 
@@ -187,13 +160,16 @@ do {
 		echo "\n Dealer takes a card. " . PHP_EOL;
 		$dealer[] = array_pop($shuffled_deck);
 		echo "\n";
+
 		echoHand ($dealer, 'Dealer', false);
 		$dealers_total = getHandTotal($dealer);
 		echo "Dealer's card total is " . $dealers_total . PHP_EOL;
 	} 
-} while ($dealers_total < $players_total && $dealers_total < 21);
+} while ($dealers_total <= 17);
 
-if ($dealers_total > 21) {
+$dealers_total = getHandTotal($dealer);
+
+if ($dealers_total > 22) {
 	echo "\n Dealer Busted!!!!!!!" . PHP_EOL;
 
 } elseif ($dealers_total == 21 && $players_total != 21) {
@@ -201,9 +177,9 @@ if ($dealers_total > 21) {
 
 } elseif ($dealers_total > $players_total) {
 	echo "\n Dealer WINS!!!!!!" . PHP_EOL;
+
 } elseif ($dealers_total == $players_total) {
 	echo "The game is a push." . PHP_EOL;
 }
-
-
+exit(0);
 ?>
