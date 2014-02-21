@@ -142,31 +142,46 @@ $answer = (strtoupper(trim(fgets(STDIN))));
 	} elseif ($answer === 'S' || $answer === 'STAY') {
 		break;
 	} 
-
+// at this point, if the player has more than 21, tell them they busted
+// otherwise, if they have 21, tell them they won (regardless of dealer hand)
 	if ($players_total == 21) {
 		echo "You win!";
 		exit (0);
 
 	} elseif ($players_total > 21) {
 		echo "\n BUST!!!!!!!!!" . PHP_EOL;
+		exit(0);
 	}
 }
 
 // show the dealer's hand (all cards)
-// todo
+echoHand ($dealer, 'Dealer', false); 
+echo "\n";
+$dealers_total = getHandTotal($dealer);
+echo "Dealer's card total is " . $dealers_total . PHP_EOL;
 
-// todo (all comments below)
+do {
+	if ($dealers_total < $players_total) {
+		echo "\n Dealer takes a card. " . PHP_EOL;
 
-// at this point, if the player has more than 21, tell them they busted
-// otherwise, if they have 21, tell them they won (regardless of dealer hand)
+		$dealer[] = array_pop($shuffled_deck);
+		echo "\n";
+		echoHand ($dealer, 'Dealer', false);
+		$dealers_total = getHandTotal($dealer);
+	} 
+} while ($dealers_total < $players_total && $dealers_total < 21);
 
-// if neither of the above are true, then the dealer needs to draw more cards
-// dealer draws until their hand has a value of at least 17
-// show the dealer hand each time they draw a card
+if ($dealers_total > 21) {
+	echo "\n Dealer Busted!!!!!!!" . PHP_EOL;
 
-// finally, we can check and see who won
-// by this point, if dealer has busted, then player automatically wins
-// if player and dealer tie, it is a "push"
-// if dealer has more than player, dealer wins, otherwise, player wins
+} elseif ($dealers_total == 21 && $players_total != 21) {
+	echo "\n Dealer WINS!!!!!!" . PHP_EOL;
+
+} elseif ($dealers_total > $players_total) {
+	echo "\n Dealer WINS!!!!!!" . PHP_EOL;
+} elseif ($dealers_total == $players_total) {
+	echo "The game is a push." . PHP_EOL;
+}
+
 
 ?>
