@@ -44,14 +44,14 @@ function buildDeck($suits, $cards) {
 // determine if a card is an ace
 // return true for ace, false for anything else
 function cardIsAce($card) {
-	($card['suit' == 'A'])? TRUE : FALSE;
+	($card['name' == 'A'])? TRUE : FALSE;
 }
 // determine the value of an individual card (string)
 // aces are worth 11
 // face cards are worth 10
 // numeric cards are worth their value
 function getCardValue($card) {
-  		return $card['value'];
+  		($card['name'] == 'A') ? ($card['value'] = 1) : ($card['value'] = 11);
 }
 
 // get total value for a hand of cards
@@ -132,7 +132,7 @@ echo "Do you want to (H)it or (S)tay?" . PHP_EOL;
 $answer = (strtoupper(trim(fgets(STDIN))));
 
 	if ($answer === 'H' || $answer === 'HIT'){
-
+				
 		$player[] = array_pop($shuffled_deck);
 		echo "\n";
 		echoHand ($player, $name, false);
@@ -145,7 +145,7 @@ $answer = (strtoupper(trim(fgets(STDIN))));
 // at this point, if the player has more than 21, tell them they busted
 // otherwise, if they have 21, tell them they won (regardless of dealer hand)
 	if ($players_total == 21) {
-		echo "You win!";
+		echo "You win!" . PHP_EOL;
 		exit (0);
 
 	} elseif ($players_total > 21) {
@@ -163,13 +163,13 @@ echo "Dealer's card total is " . $dealers_total . PHP_EOL;
 do {
 	if ($dealers_total < $players_total) {
 		echo "\n Dealer takes a card. " . PHP_EOL;
-
 		$dealer[] = array_pop($shuffled_deck);
 		echo "\n";
 		echoHand ($dealer, 'Dealer', false);
 		$dealers_total = getHandTotal($dealer);
+		echo "Dealer's card total is " . $dealers_total . PHP_EOL;
 	} 
-} while ($dealers_total < $players_total && $dealers_total < 21);
+} while ($dealers_total < 17 && $dealers_total < 21);
 
 if ($dealers_total > 21) {
 	echo "\n Dealer Busted!!!!!!!" . PHP_EOL;
