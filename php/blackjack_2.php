@@ -56,7 +56,9 @@ function getHandTotal($hand) {
 			if ($numOfAce != 0){
 				$hand_worth = $hand_worth - 10;
 				$numOfAce--;
-			} 
+			} else {
+				break;
+			}
 		}
 	}
 		return $hand_worth;
@@ -129,6 +131,7 @@ while ($players_total < 21) {
 		echoHand ($player, $name, false);
 
 		$players_total = getHandTotal($player);
+		
 		echo PHP_EOL . "Player's card total is " . $players_total . PHP_EOL;
 
 	} elseif ($answer === 'S' || $answer === 'STAY') {
