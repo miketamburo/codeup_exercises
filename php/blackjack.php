@@ -169,13 +169,13 @@ do {
 
 $dealers_total = getHandTotal($dealer);
 
-if ($dealers_total > 22) {
+if ($dealers_total >= 22) {
 	echo "\n Dealer Busted!!!!!!!" . PHP_EOL;
 
 } elseif ($dealers_total == 21 && $players_total != 21) {
 	echo "\n Dealer WINS!!!!!!" . PHP_EOL;
 
-} elseif ($dealers_total > $players_total) {
+} elseif ($dealers_total > $players_total && $dealers_total <= 21) {
 	echo "\n Dealer WINS!!!!!!" . PHP_EOL;
 
 } elseif ($dealers_total == $players_total) {
