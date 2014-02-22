@@ -63,8 +63,7 @@ function getHandTotal($hand) {
 		return $hand_worth;
 }
 
-// print out a hand of cards
-// name is the name of the player
+// print out a hand of cards -- name is the name of the player
 // hidden is to initially show only first card of hand (for dealer)
 // output should look like this:  Dealer: [4 C] [???] Total: ???
 // or Player: [J D] [2 D] Total: 12
