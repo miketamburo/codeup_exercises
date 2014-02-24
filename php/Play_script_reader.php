@@ -16,14 +16,24 @@ his character.
 echo "Welcome to the script Script" . PHP_EOL;
 
 // Get the name of the play that they are acting in
-echo "Please enter the path and name of the file you wish to use." . PHP_EOL;
-$script = (trim(fgets(STDIN)));
+echo "Please enter the number of the script you wish to use." . PHP_EOL;
+echo "(1) The Importance of Being Earnest\n(2) Much Ado About Nothing\n(3) Pygmalion";
+echo "\n";
+$scriptChoice = (trim(fgets(STDIN)));
+if ($scriptChoice == 1) {
+	$script = 'challenges_data/earnest.txt';
+} elseif ($scriptChoice == 2) {
+	$script = 'challenges_data/muchado.txt';
+} elseif ($scriptChoice == 3) {
+	$script = 'challenges_data/pygmallion.txt';
+}
+
 
 // Get their character name
 echo "Please enter the name of your character as it is entered in the script for character cue.  For example:  Algernon Moncrieff is Algernon." . PHP_EOL;
 
-$character_name = "/" . (ucfirst(strtolower(trim(fgets(STDIN)))) . "./");
-
+$character_name = ucfirst(strtolower(trim(fgets(STDIN))));
+$matches = array();
 
 // Open the play's text file
 $filename = $script;
@@ -31,13 +41,13 @@ $handle = fopen($filename, "r");
 $contents = fread($handle, filesize($filename));
 fclose($handle);
 
-$contents_array = explode(space, $contents);
+$contents_array = explode(' ', $contents);
 
-var_dump($contents);
-var_dump($character_name);
+// var_dump($contents);
+// var_dump($character_name);
 
-$result = preg_match($character_name, $contents);
-var_dump($contents_array);
+$result = preg_match("/($character_name) (.+)/", $contents, $matches);
+var_dump($matches);
 
 
 // Convert the play to a searchable format (as needed)
