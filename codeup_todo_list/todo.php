@@ -1,14 +1,17 @@
 <?php
 
+require_once('filestore.php');
+
+$class = new Filestore();
 // Create array to hold list of todo items
-$items = array();
+$items = $class->items;
+$filename = $class->filename;
 
 // List array items formatted for CLI
 function list_items($list) {
     // Return string of list items separated by newlines.
     // Should be listed [KEY] Value like this:
-    // [1] TODO item 1
-    // [2] TODO item 2 - blah
+    // [1] TODO item 1 [2] TODO item 2 - blah
     $string = '';
     foreach ($list as $key => $thing) {
         $newIdex = $key + 1;
@@ -29,40 +32,20 @@ function get_input($upper = FALSE) {
 
 }
 
-function read_and_add_file($items, $filename) {
-    $handle = fopen($filename, "r");
-    $contents = fread($handle, filesize($filename));
-    fclose($handle);
-    $contents_array = explode("\n", $contents);
-
-    $items = array_merge($items, $contents_array);
-        return array_values($items);
-}
-
 function save_file($items, $filename) {
    
     if (file_exists($filename)) {
         echo "The file $filename exists.  Comfirm you want to replace the file." . PHP_EOL;
         $answer = get_input(TRUE);
         if ($answer == "YES" || $answer == "Y"){
-            $handle = fopen($filename, "w");
-            $item = implode("\n", $items);
-            fwrite($handle, $item);
-      
-            fclose($handle);
-            return $items;
+            $class->write_lines();
         }
 
     } else {
         echo "The file $filename does not exist.  Confirm you wish to create it: (Y)es or (No) " . PHP_EOL;
         $answer = get_input(TRUE);
         if ($answer == "YES" || $answer == "Y") {
-            $handle = fopen($filename, "w");
-            $item = implode("\n", $items);
-            fwrite($handle, $item);
-      
-            fclose($handle);
-            return $items;
+            $class->write_lines();
         } 
     } return $items;
 }
