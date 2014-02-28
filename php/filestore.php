@@ -2,7 +2,7 @@
 
 class Filestore {
 	public $filename = '';
-	public $items = '':
+	public $items = []:
 	public $contents = [];
 
 	public function __construct($filename = ''){
@@ -22,21 +22,29 @@ class Filestore {
 	}
 	// writes each element in $array to a new line in $this-> filename
 	public function write_lines(){
-		$handle = fopen($this->filename, 'w');
-			foreach ($this->contents as $fields) {
-				fputcsv($handle, $fields);
-			}
-		fclose($handle);
-	}
+		$handle = fopen($this->filename, "w");
+        $item = implode("\n", $this->items);
+        fwrite($handle, $item);
+        fclose($handle);
+        return $items;
+    }
 
 	// Reads contents of csv $this->filename, returns an array
 	public function read_csv(){
 		$contents = [];
 		$handle = fopen($this->filename, 'r');
 		while(($data = fgetcsv($handle)) !== FALSE) {
-	  	$contents[] = $data;
+	  		$contents[] = $data;
 		}
 		fclose($handle);
 		return $contents;
+	}
+
+	public function write_csv(){
+		$handle = fopen($this->filename, 'w');
+			foreach ($addresses_array as $fields) {
+				fputcsv($handle, $fields);
+			}
+		fclose($handle);
 	}
 }
