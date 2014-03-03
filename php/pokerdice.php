@@ -1,9 +1,6 @@
 <?php
 
 $filename = "challenges_data/pokerdice.txt";
-require('filestore.php');
-
-
 // function to take user input on STDIN
 // performing stringtoupper if $upper is true
 function getInput($upper = false) {
@@ -110,16 +107,13 @@ function scoreRoll($dice) {
 // add an entry to the history log to keep track
 // of how many rolls there have been of a given type
 // sort history with highest occurring type first
+$history = ['straight' => 0, 'nada' => 0, 'pair' => 0, 'two pairs' => 0, 'three of a kind' => 0, 'Full House' => 0, 'four of a kind' => 0, 'five of a kind' => 0];
 function logHistory(&$history, $type) {	
-	// read file
-	read_csv($filename);
-
-	$history = ['straight' => 0, 'nada' => 0, 'pair' => 0, 'two pairs' => 0, 'three of a kind' => 0, 'Full House' => 0, 'four of a kind' => 0, 'five of a kind' => 0];
-	$history[$type] = $history[$type] + 1;
-
-	// write file
-	write_csv($filename);
-	
+	if (!isset($history[$type])){
+		$history[$type] = 1;
+	} else {
+		$history[$type] = $history[$type] + 1;
+	}
 }
 
 // display stats from history log based on number of rolls
@@ -134,9 +128,11 @@ function logHistory(&$history, $type) {
 // << STATS -------------
 function showStats($history, $rolls) {
 	echo ">> STATS ------------\n";
+	arsort($history);
 	foreach ($history as $key => $value) {
 		$percentage = (("$value"/$rolls) * 100);
-		echo "$key: " . $percentage . PHP_EOL;
+		$percentage = number_format($percentage, 2); 
+		echo "$key: " . $percentage . "%" . PHP_EOL;
 	}
 	echo "<< STATS -------------\n";
 }
