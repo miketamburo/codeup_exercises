@@ -2,7 +2,7 @@
 
 class Filestore {
 	public $filename = '';
-	public $items = []:
+	public $items = [];
 	public $contents = [];
 
 	public function __construct($filename = ''){
