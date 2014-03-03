@@ -46,17 +46,17 @@ fclose($handle);
 
 $contents_array = explode("\n", $contents);
 
-// var_dump($contents);
-// var_dump($character_name);
 $results = preg_split("/($character_name)./", $contents, null, PREG_SPLIT_NO_EMPTY);
-// $result = preg_match("/^($character_name) (.+)/", $contents, $matches);
-print_r($results);
-// foreach($results as $key => $result){
-// 	echo gettype($result);
-// 	if (is_array($result)){
-// 		echo $result . PHP_EOL;
-// 	}
-// }
+
+
+foreach($results as $key => $result){
+
+	if (is_array($result)){
+		echo $result . PHP_EOL;
+	} elseif (is_string($result)){
+	
+	}
+}
 
 
 // Convert the play to a searchable format (as needed)
