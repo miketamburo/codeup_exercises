@@ -12,18 +12,24 @@ class Filestore {
 	// returns array of lines in $this->filename
 	public function read_lines(){
 		$handle = fopen($this->filename, "r");
-		$contents = fread($handle, filesize($this->filename));
+		$fileSize1 = filesize($this->filename);
+		if ($fileSize1 > 0){
+			$contents = fread($handle, $fileSize1);
+		} else {
+			$contents = [];
+		}	
 		fclose($handle);
+
 		if (is_string($contents)){
 			$contents = explode("\n", $contents);	
 		} 	
-		$items = array_merge($this->items, $contents);
-		return array_values($this->items);
+		
+		return $contents;
 	}
 	// writes each element in $array to a new line in $this-> filename
-	public function write_lines(){
+	public function write_lines($items){
 		$handle = fopen($this->filename, "w");
-        $item = implode("\n", $this->items);
+        $item = implode("\n", $items);
         fwrite($handle, $item);
         fclose($handle);
         return $items;
@@ -40,9 +46,9 @@ class Filestore {
 		return $contents;
 	}
 
-	public function write_csv(){
+	public function write_csv($contents){
 		$handle = fopen($this->filename, 'w');
-			foreach ($addresses_array as $fields) {
+			foreach ($contents as $fields) {
 				fputcsv($handle, $fields);
 			}
 		fclose($handle);
