@@ -43,13 +43,12 @@ function scoreRoll($dice) {
 	// a pair = 5
 	// nada = 0
 	$arrayCt = array_count_values($dice);
-	var_dump($arrayCt);
 		switch (count($arrayCt)) {
 			case 5:
 				// check for straight (no "1" in line-up)
 					if ($dice[0] != 1){
 						$bonus = 40;
-						$type = "Stright";
+						$type = "stright";
 					} else {
 						$bonus = 0;
 						$type = "nada";
@@ -58,7 +57,7 @@ function scoreRoll($dice) {
 			case 4:
 				// one pair bonus is 5 pts
 				$bonus = 5;
-				$type = "A pair";
+				$type = "pair";
 				break;
 			case 3:
 				// 2 pairs or 3 of kind
@@ -68,10 +67,10 @@ function scoreRoll($dice) {
 				
 					if ($search == FALSE){
 						$bonus = 15;
-						$type = "Two pairs";
+						$type = "two pairs";
 					} else {
 						$bonus = 25;
-						$type = "Three of a kind";
+						$type = "three of a kind";
 					}
 				break;
 			case 2:
@@ -85,13 +84,13 @@ function scoreRoll($dice) {
 						$type = "Full House";
 					} else {
 						$bonus = 75;
-						$type = "Four of a kind";
+						$type = "four of a kind";
 					}
 				break;
 			case 1:
 				// five of a kind worth 100 pts
 				$bonus = 100;
-				$type = "Five of a kind";
+				$type = "five of a kind";
 				break;
 
 			default:
@@ -102,15 +101,32 @@ function scoreRoll($dice) {
 	// generate a result in the following data structure
 	$result = ['type' => $type, 'base_score' => $base_score, 'bonus' => $bonus];
 	// return the result
-
 	return $result;
 }
-
 // add an entry to the history log to keep track
 // of how many rolls there have been of a given type
 // sort history with highest occurring type first
 function logHistory(&$history, $type) {
 	// todo
+	function read_lines(){
+		$handle = fopen($filename, "r");
+		$contents = fread($handle, filesize($filename));
+		fclose($handle);
+		if (is_string($contents)){
+			$contents = explode("\n", $contents);	
+		} 	
+		$items = array_merge($items, $contents);
+		return array_values($items);
+	}
+	// writes each element in $array to a new line in $this-> filename
+	function write_lines(){
+		$handle = fopen($filename, "w");
+        $item = implode("\n", $items);
+        fwrite($handle, $item);
+        fclose($handle);
+        return $items;
+    }
+
 }
 
 // display stats from history log based on number of rolls
@@ -123,15 +139,27 @@ function logHistory(&$history, $type) {
 // a full house: 3.77 %
 // four of a kind: 2.24 %
 // << STATS -------------
-function showStats($history, $totalRolls) {
+function showStats($history, $rolls) {
 	echo ">> STATS ------------\n";
-	// todo
+
+	echo "A pair: ";
+
+	echo "Two pair: ";
+
+	echo "Three of a kind: ";
+
+	echo "Straight: ";
+	
+	echo "Full house: ";
+	
+	echo "Four of a kind: ";
+	
 	echo "<< STATS -------------\n";
 }
 
 // track the total score
 $score = 0;
-
+$newScore = 0;
 // track the total rolls
 $rolls = 0;
 
@@ -147,34 +175,38 @@ $input = getInput(true);
 while ($input != 'Q') {
 
 	// roll the dice
-	$rollV = rollDice();
+	$rollOfDice = rollDice();
 
 	// score the result
-	// todo: use scoreRoll function
+	$rollResult = scoreRoll($rollOfDice);
 
 	// add the current roll to the total score
+	$newScore = $rollResult['base_score'] + $rollResult['bonus']; 
+	var_dump($newScore);
+	$score = $newScore + $score;
+	var_dump($score);
+	// log the roll type history
 	// todo
 
-	// log the roll type history
-	// todo: use logHistory function
-
 	// show the dice
-	showDice($rollV);
+	showDice($rollOfDice);
 
 	// display roll type, base score, and bonus
 	// ex: You rolled a straight for a base score of 20 and a bonus of 40.
-	// todo
+	echo "\n You rolled a " . $rollResult['type'] . " for a base score of " . $rollResult['base_score'] . " and a bonus of " . $rollResult['bonus'] . ".\n";
 	
 	// display total score
 	// ex: Total Score: 32306, in 849 rolls.
-	$score = scoreRoll($rollV);
-	var_dump($score);
+	$rolls = $rolls + 1;
+	echo "Total Score: $score, in $rolls rolls.";
 	// show roll type statistics
 	// todo: use showStats function
 
 	// prompt use to roll again or quit
+	
 	echo "Press enter to roll again, or Q to quit.\n";
 	$input = getInput(true);
+	$rollResult = [];
 }
 
 ?>
