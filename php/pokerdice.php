@@ -1,5 +1,9 @@
 <?php
 
+$filename = "challenges_data/pokerdice.txt";
+require('filestore.php');
+
+
 // function to take user input on STDIN
 // performing stringtoupper if $upper is true
 function getInput($upper = false) {
@@ -48,7 +52,7 @@ function scoreRoll($dice) {
 				// check for straight (no "1" in line-up)
 					if ($dice[0] != 1){
 						$bonus = 40;
-						$type = "stright";
+						$type = "straight";
 					} else {
 						$bonus = 0;
 						$type = "nada";
@@ -106,27 +110,16 @@ function scoreRoll($dice) {
 // add an entry to the history log to keep track
 // of how many rolls there have been of a given type
 // sort history with highest occurring type first
-function logHistory(&$history, $type) {
-	// todo
-	function read_lines(){
-		$handle = fopen($filename, "r");
-		$contents = fread($handle, filesize($filename));
-		fclose($handle);
-		if (is_string($contents)){
-			$contents = explode("\n", $contents);	
-		} 	
-		$items = array_merge($items, $contents);
-		return array_values($items);
-	}
-	// writes each element in $array to a new line in $this-> filename
-	function write_lines(){
-		$handle = fopen($filename, "w");
-        $item = implode("\n", $items);
-        fwrite($handle, $item);
-        fclose($handle);
-        return $items;
-    }
+function logHistory(&$history, $type) {	
+	// read file
+	read_csv($filename);
 
+	$history = ['straight' => 0, 'nada' => 0, 'pair' => 0, 'two pairs' => 0, 'three of a kind' => 0, 'Full House' => 0, 'four of a kind' => 0, 'five of a kind' => 0];
+	$history[$type] = $history[$type] + 1;
+
+	// write file
+	write_csv($filename);
+	
 }
 
 // display stats from history log based on number of rolls
@@ -141,19 +134,10 @@ function logHistory(&$history, $type) {
 // << STATS -------------
 function showStats($history, $rolls) {
 	echo ">> STATS ------------\n";
-
-	echo "A pair: ";
-
-	echo "Two pair: ";
-
-	echo "Three of a kind: ";
-
-	echo "Straight: ";
-	
-	echo "Full house: ";
-	
-	echo "Four of a kind: ";
-	
+	foreach ($history as $key => $value) {
+		$percentage = (("$value"/$rolls) * 100);
+		echo "$key: " . $percentage . PHP_EOL;
+	}
 	echo "<< STATS -------------\n";
 }
 
@@ -182,28 +166,22 @@ while ($input != 'Q') {
 
 	// add the current roll to the total score
 	$newScore = $rollResult['base_score'] + $rollResult['bonus']; 
-	var_dump($newScore);
 	$score = $newScore + $score;
-	var_dump($score);
 	// log the roll type history
-	// todo
+	logHistory($history, $rollResult['type']);
 
 	// show the dice
 	showDice($rollOfDice);
-
 	// display roll type, base score, and bonus
 	// ex: You rolled a straight for a base score of 20 and a bonus of 40.
 	echo "\n You rolled a " . $rollResult['type'] . " for a base score of " . $rollResult['base_score'] . " and a bonus of " . $rollResult['bonus'] . ".\n";
-	
 	// display total score
-	// ex: Total Score: 32306, in 849 rolls.
 	$rolls = $rolls + 1;
-	echo "Total Score: $score, in $rolls rolls.";
+	echo "Total Score: $score, in $rolls rolls. \n";
 	// show roll type statistics
-	// todo: use showStats function
+	showStats($history, $rolls);
 
 	// prompt use to roll again or quit
-	
 	echo "Press enter to roll again, or Q to quit.\n";
 	$input = getInput(true);
 	$rollResult = [];
