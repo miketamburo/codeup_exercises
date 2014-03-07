@@ -26,7 +26,6 @@ $books = array(
     )
 );
 // Run the foreach loop
-
 foreach ($books as $book => $value){
 	// $key is the name of the imbedded array as well as the key for the parent array
 	// $value is the value assigned to each key of the parent array

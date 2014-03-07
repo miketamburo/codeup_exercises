@@ -20,8 +20,6 @@ function checkVariable($variable_name) {
 echo "Checking variable \$nothing.\n";
 checkVariable($nothing);
 
-// TEST: If var $nothing is empty, display '$nothing is EMPTY'
-
 // TEST: If var $something is set, display '$something is SET'
 echo "Checking variable \$something.\n";
 checkVariable($something);
