@@ -1,5 +1,5 @@
 <?php
-
+// do while lesson exercise
 $a = 2;
 
 do {

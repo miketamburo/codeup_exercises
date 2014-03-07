@@ -26,5 +26,4 @@ if ($currency = 'E') {
 
 echo "\n$amount is equivalent to $total $currency_name" . PHP_EOL;
 
-
 ?>

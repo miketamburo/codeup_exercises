@@ -4,7 +4,6 @@
 $items = array();
 
 // The loop!
-
 do {
     // Iterate through list items
     foreach ($items as $key => $item) {
