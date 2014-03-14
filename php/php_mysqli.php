@@ -45,7 +45,7 @@ $national_parks = [
 
 ['name' => 'Badlands',
 'location' => 'South Dakota',
-'description' => 'The Badlands are a collection of buttes, pinnacles, spires, and grass prairies. It has the world\'s richest fossil beds from the Oligocene epoch, and there is wildlife including bison, bighorn sheep, black-footed ferrets, and swift foxes.',
+'description' => "The Badlands are a collection of buttes, pinnacles, spires, and grass prairies. It has the world\'s richest fossil beds from the Oligocene epoch, and there is wildlife including bison, bighorn sheep, black-footed ferrets, and swift foxes.",
 'date_established' => '1978-11-10',
 'area_in_acres' => '242755.94'],							
 												
@@ -91,8 +91,8 @@ sculpted rock, as well as artifacts from Ancient Pueblo Peoples.',
 
 ['name' => 'Capitol Reef',
 'location' => 'Utah',
-'description' =>  'The park\'s Waterpocket Fold is a 100-mile (160 km) monocline that shows the Earth\'s geologic 
-layers. Other natural features are monoliths and sandstone domes and cliffs shaped like the United States Capitol.',
+'description' =>  "The park\'s Waterpocket Fold is a 100-mile (160 km) monocline that shows the Earth\'s geologic 
+layers. Other natural features are monoliths and sandstone domes and cliffs shaped like the United States Capitol.",
 'date_established' =>  '1971-12-18',
 'area_in_acres' => '241904.26'],
 
@@ -108,11 +108,12 @@ species. Above ground are the Chihuahuan Desert and Rattlesnake Springs.',
 foreach ($national_parks as $parks) {
     $query = "INSERT INTO national_parks (name, location, description, date_established, area_in_acres) 
     VALUES ('{$parks['name']}', '{$parks['location']}', '{$parks['description']}', '{$parks['date_established']}', '{$parks['area_in_acres']}');";
-    $mysqli->query($query);
+    // $mysqli->query($query);
+
+	if (!$mysqli->query($query)) {
+	    throw new Exception("Query failed: (" . $mysqli->errno . ") " . $mysqli->error);
+	}    
 }
-if (!$mysqli->query($query)) {
-    throw new Exception("Query failed: (" . $mysqli->errno . ") " . $mysqli->error);
-}    
 
 
 
